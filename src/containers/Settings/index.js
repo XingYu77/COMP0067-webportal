@@ -15,26 +15,26 @@ class Settings extends Component{
         this.refreshList();
     }
     
-    refreshList(){
+    /* refreshList(){
         this.setState({
             modules:[{'ModuleCode':'COMP0067', 'ModuleName':'Design','StartDate':'01/01/2020','EndDate':'01/04/2020','Week':'14'},
             {'ModuleCode':'COMP0067', 'ModuleName':'AI','StartDate':'01/01/2020','EndDate':'01/04/2020','Week':'14'},
             ]
         })
-    }
+    } */
     
 
- /*    refreshList(){
-      fetch()
+    refreshList(){
+      fetch('http://localhost:4546/modules/')
         .then(response=> response.json())
         .then(data =>{
             this.setState({modules: data});
       }
         );
-    }  */
+    }  
     render(){
 
-    const {modules,modcode,modname,modstart,modend,modweek} = this.state;
+    const {modules} = this.state;
     let editModuleClose =() => this.setState({editModuleShow:false})
     const renderModule = (module, index) =>{
         return(
@@ -43,20 +43,15 @@ class Settings extends Component{
                 <td style={{width:'140px', height:'39px',color:'#9b9b9b'}}>{module.ModuleName}</td>
                 <td style={{width:'140px', height:'39px',color:'#9b9b9b'}}>{module.StartDate}</td>
                 <td style={{width:'140px', height:'39px',color:'#9b9b9b'}}>{module.EndDate}</td>
-                <td style={{width:'140px', height:'39px',color:'#9b9b9b'}}>{module.Week}</td>
+                <td style={{width:'140px', height:'39px',color:'#9b9b9b'}}>{module.Weeks}</td>
                 <td>
                 <button  className="editmodule"
-                onClick={()=> this.setState({editModuleShow:true,modcode:modules.ModuleCode,modname:modules.ModuleName,modstart:modules.StartDate,modend:modules.EndDate,modweek:modules.Week})}>
+                onClick={()=> this.setState({editModuleShow:true})}>
                  edit
                 </button>
                 <EditModule
                 show = {this.state.editModuleShow}
                 onHide={editModuleClose}
-                modcode = {modcode}
-                modname = {modname}
-                modstart = {modstart}
-                modend = {modend}
-                modweek = {modweek}
                 />
                 </td>
             </tr>

@@ -15,23 +15,23 @@ class Home extends Component{
         this.refreshList();
     }
     
-    refreshList(){
+/*     refreshList(){
         this.setState({
             modules:[{'ModuleCode':'COMP0067', 'ModuleName':'Design','StartDate':'01/01/2020','EndDate':'01/04/2020','Week':'14'},
             {'ModuleCode':'COMP0067', 'ModuleName':'Design','StartDate':'01/01/2020','EndDate':'01/04/2020','Week':'14'},
             ]
         })
-    }
+    } */
     
 
- /*    refreshList(){
-      fetch()
+   refreshList(){
+      fetch('http://localhost:4546/modules/')
         .then(response=> response.json())
         .then(data =>{
             this.setState({modules: data});
       }
         );
-    }  */
+    }  
     
     render(){
         const {modules} = this.state;

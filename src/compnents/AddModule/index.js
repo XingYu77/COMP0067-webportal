@@ -6,44 +6,45 @@ import './style.css';
 export class AddModule extends Component{
     constructor(props){
         super(props);
-        this.handleSubmit = this.handleSubmit.bind(this);
+        this.state = {modules:[],
+        module:{
+          Code:'code',
+          Name:'name',
+          Start:'start date',
+          End:'end date',
+          Weeks:'weeks'
+        }};
+        this.refreshList = this.refreshList.bind(this);
+    }
 
+    componentDidMount(){
+      this.refreshList();
+  }
+
+    refreshList(){
+      
+      fetch('http://localhost:4546/modules')
+        .then(response=> response.json())
+        .then(data =>{
+            this.setState({modules: data});
+      }
+        ); 
+    }  
+    addModule = _ =>{
+      
+      const {module} = this.state;
+      fetch(`http://localhost:4546/modules/add?ModuleCode=${module.Code}&ModuleName=${module.Name}&StartDate=${module.Start}&EndDate=${module.End}&Weeks=${module.Weeks}`)
+      .then(this.refreshList)
+      .catch(err => console.error(err))
     }
 
     handleSubmit(event){
       event.preventDefault(); 
-      alert('New module added!')
-      
-/*       fetch('' ,{
-        method:'POST'
-        headers:{
-          'Accept': 'application/json',
-          'Content-Type': 'application/json'
-        },
-        body:JSON.stringify({
-          ModuleName: event.target.ModuleName.value
-          ModuleCode: event.target.ModuleCode.value
-          StartDate: event.target.StartDate.value
-          EndDate: event.target.EndDate.value
-          Week: event.target.Week.value
-
-        })
-
-    }
-      )
-      .then(res=> res.json())
-      .then((result)=>
-      {
-        alert(result); 
-      },
-      (error)=>{
-        alert('Failed')
-      }
-      )
- */
+      alert('New module added!') 
     }
  
     render(){
+      const {modules, module} = this.state;
         return(
 
             <Modal
@@ -61,68 +62,51 @@ export class AddModule extends Component{
             <div >
               <Row>
                 <Col sm={12}>
-                 <Form onSubmit={this.handleSubmit}>
-
-                  <Form.Group controlId='ModuleName'>
-                  <Form.Label>Module Name</Form.Label> 
-                  <Form.Control
-                    type='text'
-                    name='ModuleName'
-                    required
-                    placeholder='Design'
-                  /> 
-                  </Form.Group> 
-
-                  <Form.Group controlId='ModuleCode'>
-                  <Form.Label>Module Code</Form.Label> 
-                  <Form.Control
-                    type='text'
-                    name='ModuleCode'
-                    required
-                    placeholder='COMP0000'
-                  /> 
-                  </Form.Group> 
-
-                  <Form.Group controlId='StartDate'>
-                  <Form.Label>Start Date</Form.Label> 
-                  <Form.Control
-                    type='text'
-                    name='StartDate'
-                    required
-                    placeholder='dd/mm/yyyy'
-                  /> 
-                  </Form.Group> 
-
-                  <Form.Group controlId='EndDate'>
-                  <Form.Label>End Date</Form.Label> 
-                  <Form.Control
-                    type='text'
-                    name='EndDate'
-                    required
-                    placeholder='dd/mm/yyyy'
-                  /> 
-                  </Form.Group> 
-
-                  <Form.Group controlId='Week'>
-                  <Form.Label>Amount of weeks</Form.Label> 
-                  <Form.Control
-                    type='text'
-                    name='Week'
-                    required
-                    placeholder='14'
-                  /> 
-                  </Form.Group> 
-                   
+                 <Form >
+                   <div>
+                   Module Code
+                  <input
+                   value = {module.Code}
+                   onChange={e => this.setState({ module: {...module,Code:e.target.value}})}
+                   />
+                   </div>
+                   <div>
+                   Module Name
+                  <input
+                   value = {module.Name}
+                   onChange={e => this.setState({ module: {...module,Name:e.target.value}})}
+                   />
+                   </div>
+                   <div>
+                   Start Date
+                  <input
+                   value = {module.Start}
+                   onChange={e => this.setState({ module: {...module,Start:e.target.value}})}
+                   />
+                   </div>
+                   <div>
+                   End Date
+                  <input
+                   value = {module.End}
+                   onChange={e => this.setState({ module: {...module,End:e.target.value}})}
+                   />
+                   </div>
+                   <div>
+                   Weeks
+                  <input
+                   value = {module.Weeks}
+                   onChange={e => this.setState({ module: {...module,Weeks:e.target.value}})}
+                   />
+                   </div>                  
                   <Form.Group >
-                  <button  className="button3" type='submit'>
+                  <button  className="button3" type='submit' onClick={this.addModule}>
                      Add module
                  </button>
                   </Form.Group> 
     
                   </Form> 
                 </Col>
-              </Row>
-            
+              </Row>          
             </div>
             </Modal.Body>
             

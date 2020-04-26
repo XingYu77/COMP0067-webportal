@@ -1,7 +1,5 @@
 import React from 'react';
 import {Link} from 'react-router-dom';
-
-
 import './style.css';
 
 
@@ -21,7 +19,7 @@ const Header = props =>{
             <nav className="headerMenu">
            
             <Link to='../../containers/Home'>Home</Link>
-            <Link to='../../containers/Settings'>Settings</Link>
+            <Link to='../../containers/Settings' style={{marginLeft:320}}>Settings</Link>
                 
             </nav>
           </header>

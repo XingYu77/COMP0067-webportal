@@ -31,8 +31,7 @@ const TAs =props =>{
               <ReactBootStrap.Table striped border hover>
                   <thead>
                       <tr>
-                          <th style={{width:'140px', height:'39px',color:'#535353',textAlign:'left'}}>Name</th>
-                          
+                          <th style={{width:'140px', height:'39px',color:'#535353',textAlign:'left'}}>Name</th>                       
                           <th style={{width:'140px', height:'39px',color:'#535353',textAlign:'left'}}>eMail</th>
                           <th style={{width:'140px', height:'39px',color:'#535353',textAlign:'left'}}>Student ID</th>
                           <th style={{width:'140px', height:'39px',color:'#535353',textAlign:'left'}}>Degree</th>

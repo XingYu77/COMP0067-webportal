@@ -6,44 +6,45 @@ import './style.css';
 export class EditModule extends Component{
     constructor(props){
         super(props);
-        this.handleSubmit = this.handleSubmit.bind(this);
+        this.state = {modules:[],
+        module:{
+          Code:'code',
+          Name:'name',
+          Start:'start date',
+          End:'end date',
+          Weeks:'weeks'
+        }};
+        this.refreshList = this.refreshList.bind(this);
+    }
 
+    componentDidMount(){
+      this.refreshList();
+  }
+
+    refreshList(){
+      
+      fetch('http://localhost:4546/modules')
+        .then(response=> response.json())
+        .then(data =>{
+            this.setState({modules: data});
+      }
+        ); 
+    }  
+    editModule = _ =>{
+      
+      const {module} = this.state;
+      fetch(`http://localhost:4546/modules/update?ModuleCode=${module.Code}&ModuleName=${module.Name}&StartDate=${module.Start}&EndDate=${module.End}&Weeks=${module.Weeks}`)
+      .then(this.refreshList)
+      .catch(err => console.error(err))
     }
 
     handleSubmit(event){
       event.preventDefault(); 
-      alert('Module Edited!')
-      
-/*       fetch('' ,{
-        method:'PUT'
-        headers:{
-          'Accept': 'application/json',
-          'Content-Type': 'application/json'
-        },
-        body:JSON.stringify({
-          ModuleName: event.target.ModuleName.value
-          ModuleCode: event.target.ModuleCode.value
-          StartDate: event.target.StartDate.value
-          EndDate: event.target.EndDate.value
-          Week: event.target.Week.value
-
-        })
-
-    }
-      )
-      .then(res=> res.json())
-      .then((result)=>
-      {
-        alert(result); 
-      },
-      (error)=>{
-        alert('Failed')
-      }
-      )
- */
+      alert('New module added!') 
     }
  
     render(){
+      const {modules, module} = this.state;
         return(
 
             <Modal
@@ -54,80 +55,58 @@ export class EditModule extends Component{
           >
             <Modal.Header closeButton> 
               <Modal.Title id="contained-modal-title-vcenter"> 
-              Edit Module
+              New Module
               </Modal.Title>
             </Modal.Header>
             <Modal.Body>
             <div >
               <Row>
                 <Col sm={12}>
-                 <Form onSubmit={this.handleSubmit}>
-
-                  <Form.Group controlId='ModuleName'>
-                  <Form.Label>Module Name</Form.Label> 
-                  <Form.Control
-                    type='text'
-                    name='ModuleName'
-                    required
-                    defaultValue = {this.props.modname}
-                    placeholder='Design'
-                  /> 
-                  </Form.Group> 
-
-                  <Form.Group controlId='ModuleCode'>
-                  <Form.Label>Module Code</Form.Label> 
-                  <Form.Control
-                    type='text'
-                    name='ModuleCode'
-                    required
-                    defaultValue = {this.props.modcode}
-                    placeholder='COMP0000'
-                  /> 
-                  </Form.Group> 
-
-                  <Form.Group controlId='StartDate'>
-                  <Form.Label>Start Date</Form.Label> 
-                  <Form.Control
-                    type='text'
-                    name='StartDate'
-                    required
-                    defaultValue = {this.props.modstart}
-                    placeholder='dd/mm/yyyy'
-                  /> 
-                  </Form.Group> 
-
-                  <Form.Group controlId='EndDate'>
-                  <Form.Label>End Date</Form.Label> 
-                  <Form.Control
-                    type='text'
-                    name='EndDate'
-                    required
-                    defaultValue = {this.props.modend}
-                    placeholder='dd/mm/yyyy'
-                  /> 
-                  </Form.Group> 
-
-                  <Form.Group controlId='Week'>
-                  <Form.Label>Amount of weeks</Form.Label> 
-                  <Form.Control
-                    type='text'
-                    name='Week'
-                    required
-                    defaultValue = {this.props.modweek}
-                    placeholder='14'
-                  /> 
-                  </Form.Group> 
-                   
+                 <Form >
+                   <div>
+                   Module Code
+                  <input
+                   value = {module.Code}
+                   onChange={e => this.setState({ module: {...module,Code:e.target.value}})}
+                   />
+                   </div>
+                   <div>
+                   Module Name
+                  <input
+                   value = {module.Name}
+                   onChange={e => this.setState({ module: {...module,Name:e.target.value}})}
+                   />
+                   </div>
+                   <div>
+                   Start Date
+                  <input
+                   value = {module.Start}
+                   onChange={e => this.setState({ module: {...module,Start:e.target.value}})}
+                   />
+                   </div>
+                   <div>
+                   End Date
+                  <input
+                   value = {module.End}
+                   onChange={e => this.setState({ module: {...module,End:e.target.value}})}
+                   />
+                   </div>
+                   <div>
+                   Weeks
+                  <input
+                   value = {module.Weeks}
+                   onChange={e => this.setState({ module: {...module,Weeks:e.target.value}})}
+                   />
+                   </div>                  
                   <Form.Group >
-                  <button  className="button3" type='submit'>
-                     Update Module
+                  <button  className="button3" type='submit' onClick={this.editModule}>
+                     Edit module
                  </button>
                   </Form.Group> 
     
                   </Form> 
                 </Col>
-              </Row>
-            
+              </Row>          
             </div>
             </Modal.Body>
             
