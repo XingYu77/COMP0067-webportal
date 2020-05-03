@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import Header from '../Header';
-import Subheader from '../Subheader';
+
 import './style.css';
 import {Link} from 'react-router-dom';
 
