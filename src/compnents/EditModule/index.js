@@ -5,24 +5,36 @@ import './style.css';
 
 export class EditModule extends Component{
     constructor(props){
-        super(props);
-        this.state = {modules:[],
-        module:{
-          Code:'code',
-          Name:'name',
-          Start:'start date',
-          End:'end date',
-          Weeks:'weeks'
-        }};
-        this.refreshList = this.refreshList.bind(this);
+      super(props);
+      this.state = {modules:[], Code: '', Name: '', Start:'', End:'', Weeks:''};
+      this.getWeeks = this.getWeeks.bind(this);
+      this.changeInput = this.changeInput.bind(this);
+      this.weeksBetween = this.weeksBetween.bind(this);
     }
 
-    componentDidMount(){
-      this.refreshList();
-  }
+    getWeeks(){
+      if (this.state.Start == '' || this.state.End==''){
+        return 0
+      } else {
+        const resultingweeks = this.weeksBetween(this.state.Start,this.state.End)
+        return resultingweeks
+      }
+    };
+    
+    weeksBetween(d1, d2) {
+      const day1 = new Date(d1)
+      const day2 = new Date(d2)
+      return Math.round((day2.getTime() - day1.getTime()) / (7 * 24 * 60 * 60 * 1000));
+    }
+
+    changeInput(e) {
+      const target = e.target;
+      const value = target.value;
+      const name = target.name
+      this.setState({[name]: value});
+    };
 
     refreshList(){
-      
       fetch('http://localhost:4546/modules')
         .then(response=> response.json())
         .then(data =>{
@@ -46,70 +58,40 @@ export class EditModule extends Component{
     render(){
       const {modules, module} = this.state;
         return(
-
             <Modal
-            {...this.props} 
-            size="lg"
-            aria-labelledby="contained-modal-title-vcenter"
-            centered
-          >
-            <Modal.Header closeButton> 
-              <Modal.Title id="contained-modal-title-vcenter"> 
-              New Module
-              </Modal.Title>
-            </Modal.Header>
+              {...this.props} size="md" aria-labelledby="contained-modal-title-vcenter" centered>
+              <Modal.Header> 
+                <Modal.Title>Edit Module</Modal.Title>
+              </Modal.Header>
             <Modal.Body>
-            <div >
-              <Row>
-                <Col sm={12}>
-                 <Form >
-                   <div>
-                   Module Code
-                  <input
-                   value = {module.Code}
-                   onChange={e => this.setState({ module: {...module,Code:e.target.value}})}
-                   />
-                   </div>
-                   <div>
-                   Module Name
-                  <input
-                   value = {module.Name}
-                   onChange={e => this.setState({ module: {...module,Name:e.target.value}})}
-                   />
-                   </div>
-                   <div>
-                   Start Date
-                  <input
-                   value = {module.Start}
-                   onChange={e => this.setState({ module: {...module,Start:e.target.value}})}
-                   />
-                   </div>
-                   <div>
-                   End Date
-                  <input
-                   value = {module.End}
-                   onChange={e => this.setState({ module: {...module,End:e.target.value}})}
-                   />
-                   </div>
-                   <div>
-                   Weeks
-                  <input
-                   value = {module.Weeks}
-                   onChange={e => this.setState({ module: {...module,Weeks:e.target.value}})}
-                   />
-                   </div>                  
-                  <Form.Group >
-                  <button  className="button3" type='submit' onClick={this.editModule}>
-                     Edit module
-                 </button>
-                  </Form.Group> 
-    
-                  </Form> 
-                </Col>
-              </Row>          
-            </div>
+              <div>
+                  <Form>
+                    <div className='field'>
+                      <div><p className="fieldtitle">Module code</p></div>
+                      <div className="fieldinput"><input name="Code" placeholder="COMP0000" onChange={this.changeInput}/></div>
+                    </div>
+                    <div className='field'>
+                      <div><p className="fieldtitle">Module name</p></div>
+                      <div className="fieldinput"><input name="Code" placeholder="e.g. Software Architecture" onChange={this.changeInput}/></div>
+                    </div>
+                    <div className='field'>
+                      <div><p className="fieldtitle">Start date</p></div>
+                      <div className="fieldinput"><input name="Start" placeholder="mm/dd/yy" type="date" onChange={this.changeInput}/></div>
+                    </div>
+                    <div className='field'>
+                      <div><p className="fieldtitle">End date</p></div>
+                      <div className="fieldinput"><input name="End" placeholder="mm/dd/yy" type="date" onChange={this.changeInput}/></div>
+                    </div>
+                    <div className='field'>
+                      <div><p className="fieldtitle">Weeks</p></div>
+                      <div><p className="weeks" name="Weeks">dd</p></div>
+                    </div>             
+                    <Form.Group>
+                      <button  className="button3" type='submit' onClick={this.addModule}>Add module</button>
+                    </Form.Group> 
+                  </Form>         
+              </div>
             </Modal.Body>
-            
           </Modal>
         );
     }

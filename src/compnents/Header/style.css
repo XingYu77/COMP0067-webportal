@@ -1,44 +1,123 @@
-.header{
-    margin-top: 10px;
-    height: 40px;
-    background-color:#8b93a8 ;
-    display: flex;    
+.mainheader{
+    height: 3.5vw;
+    background-color: white;
 }
-.welcome{
-    margin-top: 0px;
-    margin-left: 33px;
-    display: flex;
-    height: 67px;
+
+.left{
+    float:left;
+    width: 30vw;
 }
+
 .logo{
-    margin-top: 20px;
-    margin-left: 33px;
-
-}
-.text1{
-    margin-top: 30px;
-    margin-left: 10px;
-    color: #535353;
-}
-.text2{
-    margin-top: 30px;
-    margin-left: 5px;
-    color: #8b93a8;
-}
-.text3{
-    margin-top: 30px;
-    margin-left: 800px;
-    color: #535353;
-}
-.headerMenu{
-    margin: 10px 0;;
+    height: 1.5vw;
+    float:left;
+    margin-right:1vw;
+    margin-left: 1vw;
+    margin-top: 1vw;
+    opacity: 0.8;
 }
 
-.headerMenu a{
-    
-    display: inline-block;
-    margin: 0 110px;
+.logotext1{
+    font-family:'Avenir';
+    font-size: 1vw;
+    font-weight: bold;
+    margin-right: 0.5vw;
+    float: left;
+    padding: 1vw 0;
+    margin-bottom: 0;
+}
+
+.logotext2{
+    font-family:'Avenir';
+    font-size: 1vw;
+    float: left;
+    padding: 1vw 0;
+    margin-bottom: 0;
+}
+
+.dropbtn{
+    color: black;
+    cursor: pointer;
+    border: none;
+}
+
+.right{
+    text-align: right;
+    padding: 1vw 4vw;
+    padding-right: 2vw;
+    font-size: 1vw;
+    font-family: "Avenir";
+}
+
+.triangle{
+    height: 0.4vw;
+    width: 0.7vw;
+}
+
+.dropdown-content {
+    display: none;
+    position: absolute;
+    right: 2vw;
+    margin-top: 0.5vw;
+    background-color: #f9f9f9;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index: 1;
+  }
+  
+.dropdown-content a {
+    color: #707070;
     text-decoration: none;
-    color:#ffffff;
-    font-size: 16px;
+    display: block;
+  }
+  
+  .dropdown-content a:hover {background-color: #f1f1f1;}
+  
+  .right:hover .dropdown-content {
+    display: block;
+    text-decoration: none;
+  }
+
+.secondaryheader{
+    margin: 0vw 0vw;
+    padding: 0vw 0vw;
+    padding-bottom: 0;
+    margin-bottom: 0;
+    overflow: hidden;
+    background-color: #8B93A8;
+    height: 2.8vw;
+  }
+
+ul{
+    list-style-type: none;
+  }
+  
+li {
+    float: left;
+  }
+  
+li a {
+    display: block;
+    color: white;
+    text-align: center;
+    padding-top: 0.6vw;
+    width:7vw;
+    font-size: 1vw;
+    height: 2.8vw;
+    text-decoration: none;
+  }
+  
+li a:hover {
+    background-color: white;
+    color:#535353;
+    text-decoration: none;
+  }
+  
+.active {
+    background-color: #576077;
+    color:white;
+    font-weight: bold;
 }
+
+.blank{
+    width: 0vw;
+  }

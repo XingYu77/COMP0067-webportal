@@ -1,0 +1,27 @@
+.mytable{
+    padding-top: 0.5vw;
+    font-family: "Avenir";
+    font-size: 1vw;
+    margin-left: 0;
+    padding-left: 0;
+}
+
+table {
+    width: 80vw;
+    margin-left: 0vw;
+    padding-left: 0vw;
+    position: absolute;
+    left:8vw;
+  }
+
+tr{
+    cursor: pointer;
+}
+
+th, td {
+    padding: 0.5vw;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+  }
+  
+tbody tr:hover {background-color:#f5f5f5;}

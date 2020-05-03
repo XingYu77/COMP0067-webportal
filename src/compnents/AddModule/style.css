@@ -1,11 +1,45 @@
+.field{
+    padding-bottom: 1vw;
+}
+
+.field:after{
+    content: "";
+    display: table;
+    clear: both;
+}
+
+.fieldtitle{
+    font-family: 'Avenir';
+    padding: 12px 12px 12px 0;
+    float: left;
+    width: 25%;
+    margin-top: 2px;
+}
+
+.fieldinput{
+    box-sizing: border-box;
+    float: left;
+    width:75%;
+    font-family: 'Avenir';
+    border-radius: 0.3vw;
+}
+
+input, select, textarea {
+    width: 100%;
+    padding: 0.6vw;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+  }
+
+.weeks{
+    font-family: 'Avenir';
+    padding:0.7vw;
+}
+
 .button3{
-    width: 140px;
-    height: 35px;
-    margin-top: 10px;
-    margin-left: 620px;
-    background-color: #ffffff;
-    font-size: 14px;
-    color: #382ee5;
-    border-radius: 20px;
-    
+    background-color: #382EE5;
+    color:white;
+    padding: 0.4vw 1.9vw;
+    border-radius: 1vw;
+    margin-left: 18vw;
 }
