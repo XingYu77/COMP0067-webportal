@@ -17,14 +17,6 @@
   padding-bottom: 0vw;
 }
 
-.fieldinput{
-  box-sizing: border-box;
-  float: left;
-  width:75%;
-  font-family: 'Avenir';
-  border-radius: 0.3vw;
-}
-
 input, select, textarea {
   width: 100%;
   padding: 0.6vw;
