@@ -1,24 +1,26 @@
 import React from 'react';
-import './App.css';
-import Login from './containers/Login';
+import { BrowserRouter as Router, Route } from 'react-router-dom';
+import { connect } from 'react-redux';
+
+import { PrivateRoute } from './compnents/_privateRouter';
 import Home from './containers/Home';
+import Login from './containers/Login';
 import Module from './containers/Module';
-import { BrowserRouter as Router,Route} from 'react-router-dom';
 
 
 class App extends React.Component {
-	render(){
-		return(
-		<Router>
-		 <div>
-			<Route exact path="/" component={Login} />
-      <Route path="/containers/Login" component={Login} />
-			<Route path="/containers/Home" component={Home} /> 
-			<Route path="/containers/Module/:moduleId" component={Module} />                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    
-		</div>
-		</Router>
+	render() {
+		return (
+			<Router>
+				<div>
+					<Route path="/login" component={Login} />
+					<PrivateRoute exact path="/" component={Home} />
+					<PrivateRoute exact path="/Module/:moduleId" component={Module} />
+				</div>
+			</Router>
 		)
 	}
 }
+
 export default App;
 
