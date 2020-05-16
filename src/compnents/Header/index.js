@@ -16,14 +16,14 @@ const Header = props =>{
                 <img src={require('../../triangle_home.png')} className="triangle"/>
               </div>
               <div className="dropdown-content">
-                <a href='../../containers/Login'>Logout</a>
+                <a href='/login'>Logout</a>
               </div>
             </div>
           </div>
           <div className="secondaryheader">
             <ul>
               <li><a className="blank"> </a></li>
-              <li><a className="active" href='../../containers/Home'>Home</a></li>
+              <li><a className="active" href='/'>Home</a></li>
             </ul>
           </div>
      </div>

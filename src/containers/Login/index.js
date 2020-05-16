@@ -15,7 +15,7 @@ const Login = props => {
         <div className="loginbox">
           <p className="loginText1" >Access your account</p>
           <p className="loginText2" >Welcome to UCL Traffic Light Feedback System! As an Academic Staff, you can Login to manage the modules you are leading.</p>
-          <Link to='../../containers/Home'><button className="loginbutton">Login</button></Link>
+          <Link to='/login'><button className="loginbutton">Login</button></Link>
         </div>
       </div>
     </div>

@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 
 import { PrivateRoute } from './compnents/_privateRouter';
 import Home from './containers/Home';
+import OAuth from './compnents/_oauth';
 import Login from './containers/Login';
 import Module from './containers/Module';
 
@@ -14,8 +15,9 @@ class App extends React.Component {
 			<Router>
 				<div>
 					<Route path="/login" component={Login} />
-					<PrivateRoute exact path="/" component={Home} />
-					<PrivateRoute exact path="/Module/:moduleId" component={Module} />
+					<Route path="/oauth" component={OAuth} />
+					<Route exact path="/" component={Home} />
+					<Route exact path="/Module/:moduleId" component={Module} />
 				</div>
 			</Router>
 		)

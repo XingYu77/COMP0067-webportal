@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import './style.css';
 import { Modal, Form } from 'react-bootstrap';
 import Header from '../../compnents/Header';
 import { Link } from 'react-router-dom';
@@ -8,6 +7,8 @@ import { EditModule } from '../../compnents/EditModule';
 import { getModules } from "../../redux/selectors";
 import { connect } from "react-redux";
 import { deleteModule } from "../../redux/actions"
+import './style.css';
+
 
 
 class Home extends Component {
@@ -99,7 +100,7 @@ class Home extends Component {
                                         return <tr key={module.id}>
                                             <td><Link className='tableOption'
                                                 state={module.id}
-                                                to={'../containers/Module/' + module.id}>
+                                                to={'/Module/' + module.id}>
                                                 {module.code}</Link></td>
                                             <td>{module.name}</td>
                                             <td>{module.start}</td>
