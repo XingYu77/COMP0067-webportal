@@ -1,7 +1,17 @@
-import React from 'react';
+import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import { withRouter } from 'react-router-dom';
 import './style.css';
 
-const Header = props =>{
+class Header extends Component {
+  _onClick(dispatch) { 
+    return () => {
+      dispatch({ type: 'LOGOUT' });
+      this.props.history.push('/login');
+    }
+  }
+
+  render() {
     return(
         <div>
           <div className="mainheader">
@@ -12,11 +22,11 @@ const Header = props =>{
             </div>
             <div className="right">
               <div>
-                <button className="dropbtn">Hi, Steven</button>
+                <button className="dropbtn">Hi, {this.props.Forename}</button>
                 <img src={require('../../triangle_home.png')} className="triangle"/>
               </div>
               <div className="dropdown-content">
-                <a href='/login'>Logout</a>
+                <a href='#' onClick={this._onClick(this.props.dispatch)}>Logout</a>
               </div>
             </div>
           </div>
@@ -28,6 +38,22 @@ const Header = props =>{
           </div>
      </div>
     );
+  }
 }
 
-export default Header;
+const mapStateToProps = (state) => {
+  return {
+      Forename: state.authReducer.Forename,
+      AuthR: state.authReducer,
+  };
+};
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+      dispatch,
+  };
+};
+
+var HeaderWrapper = withRouter(Header)
+
+export default connect(mapStateToProps, mapDispatchToProps)(HeaderWrapper);

@@ -1,4 +1,38 @@
-import { createStore } from "redux";
+import { createStore, applyMiddleware } from 'redux';
+import { createLogger } from 'redux-logger';
+import { persistStore, persistReducer } from 'redux-persist';
+import storage from 'redux-persist/lib/storage'
+import thunk from 'redux-thunk';
+
 import rootReducer from "./reducers/index";
 
-export default createStore(rootReducer);
+const persistConfig = {
+    key: 'root',
+    storage,
+    whitelist: [
+      'authReducer',
+    ],
+    blacklist: [
+      'modules',
+      'students',
+      'ta',
+      'teams',
+    ],
+  };
+  
+const persistedReducer = persistReducer(persistConfig, rootReducer);
+
+const store = createStore(
+    persistedReducer,
+    applyMiddleware(
+        thunk,
+        createLogger(),
+    ),
+);
+
+const persistor = persistStore(store);
+
+export {
+  store,
+  persistor,
+};

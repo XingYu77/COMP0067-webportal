@@ -3,10 +3,11 @@ import { BrowserRouter as Router, Route } from 'react-router-dom';
 import { connect } from 'react-redux';
 
 import { PrivateRoute } from './compnents/_privateRouter';
-import Home from './containers/Home';
-import OAuth from './compnents/_oauth';
 import Login from './containers/Login';
+import Home from './containers/Home';
 import Module from './containers/Module';
+import OAuth from './compnents/_oauth';
+
 
 
 class App extends React.Component {
@@ -16,8 +17,8 @@ class App extends React.Component {
 				<div>
 					<Route path="/login" component={Login} />
 					<Route path="/oauth" component={OAuth} />
-					<Route exact path="/" component={Home} />
-					<Route exact path="/Module/:moduleId" component={Module} />
+					<PrivateRoute exact path="/" component={Home} />
+					<PrivateRoute exact path="/Module/:moduleId" component={Module} />
 				</div>
 			</Router>
 		)

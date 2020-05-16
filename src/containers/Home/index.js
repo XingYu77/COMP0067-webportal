@@ -164,6 +164,7 @@ class Home extends Component {
 
 const mapStateToProps = state => {
     const mymodules = getModules(state);
+    console.log(state);
     return { mymodules };
 };
 
