@@ -47,7 +47,8 @@
 
 .mytable{
     padding-top: 0.4vw;
-    padding-left: 8vw;
+    position:absolute;
+    left:8vw;
     font-family: "Avenir";
     font-size: 1vw;
 }
@@ -79,8 +80,27 @@ tbody tr:hover {background-color:#f5f5f5;}
 
 .tableOption{
     background-color: transparent;
-    border-color: transparent;
     color:#382EE5;
     font-weight: 500;
     text-decoration: underline;
+}
+.buttons{
+    margin-top: 1vw;
+}
+
+.button5{
+    background-color:white;
+    color:#382EE5;
+    padding: 0.4vw 2.4vw;
+    border-radius: 0.5vw;
+    margin-left: 2vw;
+}
+
+.button4{
+    background-color:#382EE5;
+    color:white;
+    padding: 0.4vw 2.4vw;
+    border-radius: 0.5vw;
+    margin-left: 9vw;
+    float: left;
 }

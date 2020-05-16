@@ -1,27 +1,29 @@
 .mytable{
-    padding-top: 0.5vw;
-    font-family: "Avenir";
-    font-size: 1vw;
-    margin-left: 0;
-    padding-left: 0;
+  margin-top: 2vw;
+  width: 82vw;
 }
 
-table {
-    width: 80vw;
-    margin-left: 0vw;
-    padding-left: 0vw;
-    position: absolute;
-    left:8vw;
-  }
-
-tr{
-    cursor: pointer;
+table.dataTable tbody tr:hover{
+  background-color: #f6f6f6;
 }
 
-th, td {
-    padding: 0.5vw;
-    text-align: left;
-    border-bottom: 1px solid #ddd;
-  }
-  
-tbody tr:hover {background-color:#f5f5f5;}
+table.dataTable tbody tr.odd{
+  background-color: #f9f9f9;
+}
+
+.dataTables_wrapper .dataTables_length{
+  padding-top: 1vw;
+}
+
+.dataTables_wrapper .dataTables_length select{
+  width: 3vw;
+}
+
+.dataTables_wrapper .dataTables_filter{
+  width: 20vw;
+}
+
+.dataTables_wrapper .dataTables_filter input{
+  height: 2vw;
+  width: 15vw;
+}

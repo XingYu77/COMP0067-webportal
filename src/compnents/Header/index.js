@@ -1,5 +1,4 @@
 import React from 'react';
-import {Link} from 'react-router-dom';
 import './style.css';
 
 const Header = props =>{
@@ -11,12 +10,12 @@ const Header = props =>{
               <p className="logotext1">Traffic Light</p>
               <p className="logotext2">Feedback System</p>
             </div>
-            <div class="right">
+            <div className="right">
               <div>
-                <button class="dropbtn">Hi, Steven</button>
+                <button className="dropbtn">Hi, Steven</button>
                 <img src={require('../../triangle_home.png')} className="triangle"/>
               </div>
-              <div class="dropdown-content">
+              <div className="dropdown-content">
                 <a href='../../containers/Login'>Logout</a>
               </div>
             </div>

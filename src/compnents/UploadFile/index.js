@@ -1,5 +1,5 @@
 import React,{Component} from 'react';
-import{Modal, Button, Row, Col,Form, InputGroup} from 'react-bootstrap';
+import{Modal,Form} from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './style.css';
 

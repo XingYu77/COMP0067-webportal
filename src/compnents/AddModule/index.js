@@ -1,19 +1,22 @@
 import React,{Component} from 'react';
-import{Modal, Button, Row, Col,Form, InputGroup} from 'react-bootstrap';
+import{ Modal , Form} from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './style.css';
+import { connect } from "react-redux";
+import { addThisModule } from "../../redux/actions";
 
 export class AddModule extends Component{
     constructor(props){
       super(props);
-      this.state = {modules:[], Code: '', Name: '', Start:'', End:'', Weeks:''}
+      this.state = {Code: '', Name: '', Start:'', End:'', Weeks:0}
       this.getWeeks = this.getWeeks.bind(this);
       this.changeInput = this.changeInput.bind(this);
       this.weeksBetween = this.weeksBetween.bind(this);
-    }
+      this.addTheModule = this.addTheModule.bind(this)
+    };
 
     getWeeks(){
-      if (this.state.Start == '' || this.state.End==''){
+      if (this.state.Start === '' || this.state.End===''){
         return 0
       } else {
         const resultingweeks = this.weeksBetween(this.state.Start,this.state.End)
@@ -34,20 +37,13 @@ export class AddModule extends Component{
       this.setState({[name]: value});
     };
 
-    addModule = _ =>{
-      const {module} = this.state;
-      fetch(`http://localhost:4546/modules/add?ModuleCode=${module.Code}&ModuleName=${module.Name}&StartDate=${module.Start}&EndDate=${module.End}&Weeks=${module.Weeks}`)
-      .then(this.refreshList)
-      .catch(err => console.error(err))
-    };
-
-    handleSubmit(event){
-      event.preventDefault(); 
-      alert('New module added!') 
-    };
+    addTheModule(){
+      this.props.onAddPressed(this.Code, this.Name, this.Start, this.End, this.Weeks);
+      console.log(this.Code);
+      this.setState({Code: '', Name: '', Start:'', End:'', Weeks:0})
+  };
  
     render(){
-      const {modules, module} = this.state;
         return(
             <Modal
               {...this.props} size="md" aria-labelledby="contained-modal-title-vcenter" centered>
@@ -59,26 +55,30 @@ export class AddModule extends Component{
                   <Form>
                     <div className='field'>
                       <div><p className="fieldtitle">Module code</p></div>
-                      <div className="fieldinput"><input name="Code" placeholder="COMP0000" onChange={this.changeInput}/></div>
+                      <div className="fieldinput"><input name="Code" placeholder="COMP0000" onChange={this.changeInput} value = {this.state.Code}/></div>
                     </div>
                     <div className='field'>
                       <div><p className="fieldtitle">Module name</p></div>
-                      <div className="fieldinput"><input name="Code" placeholder="e.g. Software Architecture" onChange={this.changeInput}/></div>
+                      <div className="fieldinput"><input name="Name" placeholder="e.g. Software Architecture" onChange={this.changeInput} value = {this.state.Name}/></div>
                     </div>
                     <div className='field'>
                       <div><p className="fieldtitle">Start date</p></div>
-                      <div className="fieldinput"><input name="Start" placeholder="mm/dd/yy" type="date" onChange={this.changeInput}/></div>
+                      <div className="fieldinput"><input name="Start" placeholder="mm/dd/yy" type="date" onChange={this.changeInput} value = {this.state.Start}/></div>
                     </div>
                     <div className='field'>
                       <div><p className="fieldtitle">End date</p></div>
-                      <div className="fieldinput"><input name="End" placeholder="mm/dd/yy" type="date" onChange={this.changeInput}/></div>
+                      <div className="fieldinput"><input name="End" placeholder="mm/dd/yy" type="date" onChange={this.changeInput} value = {this.state.End}/></div>
                     </div>
                     <div className='field'>
                       <div><p className="fieldtitle">Weeks</p></div>
-                      <div><p className="weeks" name="Weeks">{this.getWeeks()}</p></div>
+                      <div><p className="weeks" name="Weeks" value = {this.state.Weeks}>{this.getWeeks()}</p></div>
                     </div>             
                     <Form.Group>
-                      <button  className="button3" type='submit' onClick={this.addModule}>Add module</button>
+                      <button 
+                        onClick={this.addTheModule}
+                        className="button3">
+                          Add module
+                        </button>
                     </Form.Group> 
                   </Form>         
               </div>
@@ -87,3 +87,9 @@ export class AddModule extends Component{
         );
     }
 }
+
+const mapDispatchToProps = dispatch => ({
+  onAddPressed: function(co,na,st,en,we) {dispatch(addThisModule(co,na,st,en,we))}
+});
+
+export default connect(null,mapDispatchToProps)(AddModule);

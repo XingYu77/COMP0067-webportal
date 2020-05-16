@@ -1,20 +1,27 @@
 import React, { Component } from 'react';
 import './style.css';
-import {Link} from 'react-router-dom';
+import $ from 'jquery';
+import 'datatables.net';
+import 'datatables.net-dt/css/jquery.dataTables.css';
+import { connect } from "react-redux";
+import { getStudents , getTeams } from '../../redux/selectors';
 
 class Students extends Component{
     constructor(props){
         super(props);
     }
+
     render(){
+        $(document).ready( function () {
+            $('#studentstable').DataTable();
+        } );
         return(
         <div>
             <div className='Pagebody'>
                 <div className='mytable'>
-                    <table id="moduletable">
+                    <table className="studentstable" id="studentstable">
                         <thead>
                             <tr>
-                                <th> </th>
                                 <th>Student ID</th>
                                 <th>First name</th>
                                 <th>Last name</th>
@@ -24,15 +31,18 @@ class Students extends Component{
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
-                                <td name="Number">1</td>
-                                <td name="StudentID">19320894</td>
-                                <td name="FirstName">Richard</td>
-                                <td name="LastName">Westfields</td>
-                                <td name="Photo">19320894.jpg</td>
-                                <td name="eMail">r.westfields@ucl.ac.uk</td>
-                                <td name="Team">Team 9</td>
-                            </tr>
+                        {this.props.mystudents.filter(std => std.moduleId == this.props.moduleId).map(
+                                (student) => {
+                                    return <tr>
+                                        <td>{student.studentId}</td>
+                                        <td>{student.firstName}</td>
+                                        <td>{student.lastName}</td>
+                                        <td>{student.photo}</td>
+                                        <td>{student.eMail}</td>
+                                        <td>{ this.props.myteams.filter(t => t.id === student.team)[0] ? this.props.myteams.filter(t => t.id === student.team)[0].name : 'Not defined'}</td>
+                                    </tr>;
+                                    }
+                                )}
                         </tbody>
                     </table>
                 </div>
@@ -42,4 +52,10 @@ class Students extends Component{
 }
 }
 
-export default Students;
+const mapStateToProps = (state) => {
+    const mystudents = getStudents(state);
+    const myteams = getTeams(state);
+    return {mystudents, myteams };
+};
+
+export default connect (mapStateToProps)(Students);

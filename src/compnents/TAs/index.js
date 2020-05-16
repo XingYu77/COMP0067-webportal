@@ -1,22 +1,26 @@
 import React, { Component } from 'react';
-import Header from '../Header';
-
 import './style.css';
-import {Link} from 'react-router-dom';
+import $ from 'jquery';
+import 'datatables.net';
+import 'datatables.net-dt/css/jquery.dataTables.css';
+import { connect } from "react-redux";
+import { getTAs } from '../../redux/selectors';
 
 class TAs extends Component{
     constructor(props){
         super(props);
     }
     render(){
+        $(document).ready( function () {
+            $('#tastable').DataTable();
+        } );
         return(
         <div>
             <div className='Pagebody'>
                 <div className='mytable'>
-                    <table id="moduletable">
+                    <table id="tastable">
                         <thead>
                             <tr>
-                                <th> </th>
                                 <th>Name</th>
                                 <th>eMail</th>
                                 <th>Student ID</th>
@@ -24,13 +28,16 @@ class TAs extends Component{
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
-                                <td name="Number">1</td>
-                                <td name="Name">Armster, John</td>
-                                <td name="eMail">j.armster@ucl.ac.uk</td>
-                                <td name="StudentID">196382320</td>
-                                <td name="Degree">Computer Science</td>
-                            </tr>
+                        {this.props.mytas.filter(ta => ta.moduleId == this.props.moduleId).map(
+                                (ta) => {
+                                    return <tr>
+                                        <td>{ta.name}</td>
+                                        <td>{ta.eMail}</td>
+                                        <td>{ta.studentId}</td>
+                                        <td>{ta.degree}</td>
+                                    </tr>;
+                                    }
+                                )}
                         </tbody>
                     </table>
                 </div>
@@ -40,4 +47,9 @@ class TAs extends Component{
 }
 }
 
-export default TAs;
+const mapStateToProps = (state) => {
+    const mytas = getTAs(state);
+    return {mytas};
+};
+
+export default connect (mapStateToProps)(TAs);

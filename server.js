@@ -1,5 +1,5 @@
 const express = require('express');
-const app =express();
+const app = express();
 const cors = require('cors');
 
 var mysql = require('mysql');
@@ -13,10 +13,9 @@ const SELECT_ALL_MODULES = 'SELECT * FROM modules'
 const con = mysql.createConnection(
     {
         host:'localhost',
-        port:'3306',
+        port:'8888',
         user:'root',
-        password:'HxY19970211',
-        database:'COMP0067'
+        database:'webPortalDB'
     }
 );
 
