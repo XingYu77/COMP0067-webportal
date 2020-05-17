@@ -56,7 +56,6 @@ export const addTeam = (moduleId, name, lab, projectName, ta, teamLeader, firstM
   }
 });
 
-let lastTAId = 0;
 
 export const addTA = (moduleId, name, email, studentId, degree) => ({
   type: ADD_TEAM,

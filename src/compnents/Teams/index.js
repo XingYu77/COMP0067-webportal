@@ -8,9 +8,6 @@ import { getTeams , getStudents , getTAs } from '../../redux/selectors';
 
 
 class Teams extends Component{
-    constructor(props){
-        super(props);
-    }
     render(){
         $(document).ready( function () {
             $('#teamstable').DataTable();
@@ -31,7 +28,7 @@ class Teams extends Component{
                             </tr>
                         </thead>
                         <tbody>
-                        {this.props.myteams.filter(team => team.moduleId == this.props.moduleId).map(
+                        {this.props.myteams.filter(team => team.moduleId === this.props.moduleId).map(
                                 (team) => {
                                     return <tr>
                                         <td>{team.name}</td>

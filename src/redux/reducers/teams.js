@@ -1,5 +1,3 @@
-import { ADD_TEAMS } from "../actionTypes";
-
 const initialState = {
   allIds: [],
   byIds: {}

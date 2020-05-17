@@ -120,7 +120,6 @@ class UploadFile extends Component {
   }
 
   render() {
-    const { modules, module } = this.state;
     return (
       <Modal
         {...this.props} size="md" aria-labelledby="contained-modal-title-vcenter" centered>

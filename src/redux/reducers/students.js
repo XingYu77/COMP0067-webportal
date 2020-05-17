@@ -1,5 +1,3 @@
-import { ADD_STUDENT } from "../actionTypes";
-
 const initialState = {
   allIds: [],
   byIds: {}

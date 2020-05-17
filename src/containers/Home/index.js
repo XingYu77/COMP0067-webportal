@@ -6,7 +6,6 @@ import AddModule from '../../compnents/AddModule';
 import EditModule from '../../compnents/EditModule';
 import { getModules } from "../../redux/selectors";
 import { connect, batch } from "react-redux";
-import { deleteModule } from "../../redux/actions"
 import { postData } from "../../redux/_action";
 import { withRouter } from 'react-router-dom';
 import './style.css';

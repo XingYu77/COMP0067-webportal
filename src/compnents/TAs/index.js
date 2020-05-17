@@ -7,9 +7,6 @@ import { connect } from "react-redux";
 import { getTAs } from '../../redux/selectors';
 
 class TAs extends Component{
-    constructor(props){
-        super(props);
-    }
     render(){
         $(document).ready( function () {
             $('#tastable').DataTable();
@@ -28,7 +25,7 @@ class TAs extends Component{
                             </tr>
                         </thead>
                         <tbody>
-                        {this.props.mytas.filter(ta => ta.moduleId == this.props.moduleId).map(
+                        {this.props.mytas.filter(ta => ta.moduleId === this.props.moduleId).map(
                                 (ta) => {
                                     return <tr>
                                         <td>{ta.name}</td>

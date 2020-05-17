@@ -1,5 +1,3 @@
-import { ADD_TA } from "../actionTypes";
-
 const initialState = {
   allIds: [],
   byIds: {}
