@@ -44,7 +44,6 @@ class Header extends Component {
 const mapStateToProps = (state) => {
   return {
       Forename: state.authReducer.Forename,
-      AuthR: state.authReducer,
   };
 };
 

@@ -7,6 +7,7 @@ import { EditModule } from '../../compnents/EditModule';
 import { getModules } from "../../redux/selectors";
 import { connect } from "react-redux";
 import { deleteModule } from "../../redux/actions"
+import { postData } from "../../redux/_action";
 import './style.css';
 
 
@@ -57,6 +58,37 @@ class Home extends Component {
         const module_to_delete_id = e.target.getAttribute('id');
         console.log(module_to_delete_id);
         this.props.deleteThisModule(module_to_delete_id)
+    }
+
+    componentDidMount() {
+        postData('courses/list', [])
+            .then((res) => {
+                console.log(res);
+
+                let allIds = [];
+                let byIds = {};
+
+                res.forEach((row) => {
+                    let StartDate = new Date(row.StartDate);
+                    let EndDate = new Date(row.EndDate);
+                    const elapsed = EndDate - StartDate;
+
+                    allIds.push(row.UID);
+
+                    byIds[row.UID] = {
+                        code: row.CourseCode,
+                        name: row.CourseName,
+                        start: StartDate.toLocaleDateString(),
+                        end: EndDate.toLocaleDateString(),
+                        weeks: Math.ceil(elapsed / 604800000),
+                    }
+                })
+                this.props.dispatch({ type: '_SET_Module', key: 'allIds', value: allIds });
+                this.props.dispatch({ type: '_SET_Module', key: 'byIds', value: byIds });
+            })
+            .catch((error) => {
+                console.warn(error);
+            })
     }
 
     render() {
@@ -164,12 +196,12 @@ class Home extends Component {
 
 const mapStateToProps = state => {
     const mymodules = getModules(state);
-    console.log(state);
     return { mymodules };
 };
 
 const mapDispatchToProps = dispatch => {
     return {
+        dispatch,
         deleteThisModule: (id) => { dispatch(deleteModule(id)) }
     }
 }

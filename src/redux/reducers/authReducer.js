@@ -10,6 +10,7 @@ const initialState = {
     Token: null,
     UPI: null,
     JWT: null,
+    Module: null,
 };
 
 const authReducer = (state = initialState, action) => {

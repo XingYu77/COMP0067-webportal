@@ -11,9 +11,9 @@ const persistConfig = {
     storage,
     whitelist: [
       'authReducer',
+      'modules',
     ],
     blacklist: [
-      'modules',
       'students',
       'ta',
       'teams',

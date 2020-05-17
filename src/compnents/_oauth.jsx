@@ -1,15 +1,22 @@
-import React from 'react';
+import React, { useImperativeHandle } from 'react';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
+import { postData } from '../redux/_action';
 
 class OAuth extends React.Component {
     componentDidMount() {
-        var payload = "eyJVUEkiOiJ1Y3pscnQ1QHVjbC5hYy51ayIsIlRva2VuIjoiZDQ0Y2ZkNThhZjk1ZjllMGJlYjljOGQ0NWYyZjkyM2VkOWE0ODVmNjg4OTdhZmViYzlhOTM2NDAwN2E1ZmRmY2VhMWJkNTUxNGRkMDcwZGE4ZjUxNWRiNWQyNDBkNTU2ZDhiZjczZmMwYjYxMGQ0MjFkZTkxZTEwNzZlMTc5MjAiLCJGb3JlbmFtZSI6IlJ1b3FpbiIsIkZ1bGxOYW1lIjoiUnVvcWluIFRhbmciLCJVc2VyQXZhdGFyIjoiaHR0cHM6Ly9pbWcubW9lZ2lybC5vcmcvY29tbW9uL2EvYWIvJUU1JTk4JUI0JUU1JUI5JUIzJUU0JUJDJThBJUU0JUI5JThCJUU1JThBJUE5LmpwZWciLCJVc2VyR3JvdXAiOiJBUyJ9";
-        var l = atob(payload);
-        var req = JSON.parse(l);
-        const prefix = "https://comp0067-node.azurewebsites.net/"
+        this.props.dispatch({ type: 'LOGOUT' });
+        const payload = this.props.location.search.slice(1);
 
-        console.log(req);
+        try {
+            var l = atob(payload);
+            var req = JSON.parse(l);
+        } catch (error) {
+            console.warn(error);
+            // this.props.history.push('/login');
+        }
+
+        const prefix = "https://comp0067-node.azurewebsites.net/"
 
         fetch(prefix + 'jwt/', {
             method: 'POST',
@@ -22,30 +29,60 @@ class OAuth extends React.Component {
                 Token: req.Token,
             }),
         })
-        .then((res) => {
-            if (res.ok) {
-                return res.json();
-            }
-            throw new Error(res.status);
-        })
-        .then((data) => {
-            this.props.dispatch({ type: 'SET_Token', UPI: req.UPI, Token: req.Token, Forename: req.Forename});
-            this.props.dispatch({ type: 'SET_JWT', JWT: data.jwt });
+            .then((res) => {
+                if (res.ok) {
+                    return res.json();
+                }
+                throw new Error(res.status);
+            })
+            .then(async (data) => {
+                this.props.dispatch({ type: 'SET_Token', UPI: req.UPI, Token: req.Token, Forename: req.Forename });
+                this.props.dispatch({ type: 'SET_JWT', JWT: data.jwt });
 
-            this.props.history.push('/');
-        })
-        .catch((error) => {
-            console.log(error);
-        });
+                postData('courses/list', [])
+                    .then((res) => {
+                        console.log(res);
+
+                        let allIds = [];
+                        let byIds = {};
+
+                        res.forEach((row) => {
+                            let StartDate = new Date(row.StartDate);
+                            let EndDate = new Date(row.EndDate);
+                            const elapsed = EndDate - StartDate;
+
+                            allIds.push(row.UID);
+
+                            byIds[row.UID] = {
+                                code: row.CourseCode,
+                                name: row.CourseName,
+                                start: StartDate.toLocaleDateString(),
+                                end: EndDate.toLocaleDateString(),
+                                weeks: Math.ceil(elapsed / 604800000),
+                            }
+                        })
+                        this.props.dispatch({ type: '_SET_Module', key: 'allIds', value: allIds});
+                        this.props.dispatch({ type: '_SET_Module', key: 'byIds', value: byIds});
+
+                        this.props.history.push('/');
+                    })
+                    .catch((error) => {
+                        console.warn(error);
+                    })
+            })
+            .catch((error) => {
+                console.log(error);
+                // this.props.history.push('/login');
+            });
     }
 
-	render() {
-		return (
+    render() {
+        return (
             <div>
                 Redirecting...
-			</div>
-		);
-	}
+            </div>
+        );
+    }
 }
 
 const OAuthWrapper = withRouter(OAuth);

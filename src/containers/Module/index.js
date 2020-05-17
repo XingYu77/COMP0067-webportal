@@ -8,12 +8,25 @@ import './style.css';
 import { UploadFile } from '../../compnents/UploadFile';
 import { connect } from "react-redux";
 import { getModuleById } from '../../redux/selectors';
+import { postData } from '../../redux/_action';
 
 class Module extends Component {
   constructor(props) {
     super(props);
     this.state = { UploadFilesShow: false };
   };
+
+  componentDidMount() {
+    console.log('MOUNT');
+
+    console.log(this.props.match.params.moduleId);
+
+    
+  }
+
+  componentWillUnmount() {
+    console.log('UNMOUNT');
+  }
 
   render() {
     let UploadFilesClose = () => this.setState({ UploadFilesShow: false })
