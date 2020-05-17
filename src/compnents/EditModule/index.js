@@ -60,12 +60,13 @@ class EditModule extends Component {
         startdate: value.Start,
         enddate: value.End,
       })
-      .then((result) => {
-        this.props.history.goBack();
-      })
-      .catch((error) => {
-        console.warn(error);
-      })
+        .then((result) => {
+          this.props.history.push('/#');
+          this.props.history.go();
+        })
+        .catch((error) => {
+          console.warn(error);
+        })
     }
   }
   __click(e) {

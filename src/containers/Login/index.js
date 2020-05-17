@@ -7,11 +7,12 @@ class Login extends Component {
   componentDidMount() {
     if (this.props.JWT !== null) {
       this.props.history.push('/');
+      this.props.history.go();
     }
   }
 
   render() {
-    const URL = './oauth?eyJVUEkiOiJ1Y3pscnQ1QHVjbC5hYy51ayIsIlRva2VuIjoiZDQ0Y2ZkNThhZjk1ZjllMGJlYjljOGQ0NWYyZjkyM2VkOWE0ODVmNjg4OTdhZmViYzlhOTM2NDAwN2E1ZmRmY2VhMWJkNTUxNGRkMDcwZGE4ZjUxNWRiNWQyNDBkNTU2ZDhiZjczZmMwYjYxMGQ0MjFkZTkxZTEwNzZlMTc5MjAiLCJGb3JlbmFtZSI6IlJ1b3FpbiIsIkZ1bGxOYW1lIjoiUnVvcWluIFRhbmciLCJVc2VyQXZhdGFyIjoiaHR0cHM6Ly9pbWcubW9lZ2lybC5vcmcvY29tbW9uL2EvYWIvJUU1JTk4JUI0JUU1JUI5JUIzJUU0JUJDJThBJUU0JUI5JThCJUU1JThBJUE5LmpwZWciLCJVc2VyR3JvdXAiOiJBUyJ9';
+    const URL = 'https://uclapi.com/oauth/authorise?state=0&client_id=3118358259981676.8916381618480693';
     
     return (
       <div>

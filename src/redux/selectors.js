@@ -6,7 +6,7 @@ export const getModuleList = store => getModulesState(store) ? getModulesState(s
 
 export const getModuleById = (store, id) => getModulesState(store) ? { ...getModulesState(store).byIds[id], id } : {};
 
-export const getModules = store => getModuleList(store).map(id => getModuleById(store, id));
+export const getModules = store => getModuleList(store) === undefined? [] : getModuleList(store).map(id => getModuleById(store, id));
 
 
 export const getStudentsState = store => store.students;

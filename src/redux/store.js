@@ -13,8 +13,7 @@ const persistConfig = {
       'authReducer',
       'modules',
       'students',
-    ],
-    blacklist: [
+      'draftReducer',
       'ta',
       'teams',
     ],

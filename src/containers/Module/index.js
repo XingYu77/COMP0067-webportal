@@ -5,7 +5,7 @@ import Students from '../../compnents/Students';
 import Teams from '../../compnents/Teams';
 import TAs from '../../compnents/TAs';
 import './style.css';
-import { UploadFile } from '../../compnents/UploadFile';
+import UploadFile from '../../compnents/UploadFile';
 import { connect } from "react-redux";
 import { getModuleById } from '../../redux/selectors';
 import { postData } from '../../redux/_action';
@@ -17,8 +17,6 @@ class Module extends Component {
   };
 
   async componentDidMount() {
-    console.log('MOUNT');
-
     postData('students/list', [], this.props.match.params.moduleId)
       .then((list) => {
         postData('students/info', list, this.props.match.params.moduleId)
@@ -43,6 +41,9 @@ class Module extends Component {
             this.props.dispatch({ type: '_SET_Student', key: 'byIds', value: byIds });
             this.props.dispatch({ type: '_SET_Student', key: 'allIds', value: allIds });
           })
+      })
+      .catch((error) => {
+        console.warn(error);
       })
 
     postData('teams/list', [], this.props.match.params.moduleId)
@@ -95,12 +96,9 @@ class Module extends Component {
 
           })
       })
-
-    console.log(this.props.match.params.moduleId);
-  }
-
-  componentWillUnmount() {
-    console.log('UNMOUNT');
+      .catch((error) => {
+        console.warn(error);
+      })
   }
 
   render() {

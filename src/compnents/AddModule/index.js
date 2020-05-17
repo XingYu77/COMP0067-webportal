@@ -40,7 +40,7 @@ class AddModule extends Component {
     console.log(this.state);
   };
 
-  __addModule(value) {
+  __addModule(value, props) {
     return async (dispatch) => {
       postData('courses/create', {
         coursename: value.Name,
@@ -49,7 +49,33 @@ class AddModule extends Component {
         enddate: value.End,
       })
       .then((result) => {
-        this.props.history.goBack();
+        const prefix = "https://comp0067-node.azurewebsites.net/"
+
+        fetch(prefix + 'jwt/', {
+          method: 'POST',
+          headers: {
+            Accept: 'application/json',
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            UPI: props.UPI,
+            Token: props.Token,
+          }),
+        })
+        .then((res) => {
+          if (res.ok) {
+            return res.json();
+          }
+          throw new Error(res.status);
+        })
+        .then((data) => {
+          this.props.dispatch({ type: 'SET_JWT', JWT: data.jwt });
+          this.props.history.push('#');
+          this.props.history.go();
+        })
+        .catch((error) => {
+          console.warn(error);
+        })
       })
       .catch((error) => {
         console.warn(error);
@@ -59,7 +85,7 @@ class AddModule extends Component {
 
   __click(e) {
     e.preventDefault();
-    this.props.dispatch(this.__addModule(this.state));
+    this.props.dispatch(this.__addModule(this.state, this.props));
   }
 
   render() {
@@ -107,5 +133,12 @@ class AddModule extends Component {
   }
 }
 
+const mapStateToProps = (state) => {
+  return {
+    UPI: state.authReducer.UPI,
+    Token: state.authReducer.Token,
+  };
+};
+
 const AddModuleWrapper = withRouter(AddModule);
-export default connect()(AddModuleWrapper);
+export default connect(mapStateToProps)(AddModuleWrapper);

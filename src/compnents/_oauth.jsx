@@ -13,7 +13,7 @@ class OAuth extends React.Component {
             var req = JSON.parse(l);
         } catch (error) {
             console.warn(error);
-            // this.props.history.push('/login');
+            this.props.history.push('/login');
         }
 
         const prefix = "https://comp0067-node.azurewebsites.net/"
@@ -61,10 +61,11 @@ class OAuth extends React.Component {
                                 weeks: Math.ceil(elapsed / 604800000),
                             }
                         })
-                        this.props.dispatch({ type: '_SET_Module', key: 'allIds', value: allIds});
-                        this.props.dispatch({ type: '_SET_Module', key: 'byIds', value: byIds});
+                        this.props.dispatch({ type: '_SET_Module', key: 'allIds', value: allIds });
+                        this.props.dispatch({ type: '_SET_Module', key: 'byIds', value: byIds });
 
                         this.props.history.push('/');
+                        this.props.history.go();
                     })
                     .catch((error) => {
                         console.warn(error);
@@ -72,7 +73,8 @@ class OAuth extends React.Component {
             })
             .catch((error) => {
                 console.log(error);
-                // this.props.history.push('/login');
+                this.props.history.push('/login');
+                this.props.history.go();
             });
     }
 

@@ -58,20 +58,43 @@ class Home extends Component {
     goToDelete = (e) => {
         e.preventDefault();
         const module_to_delete_id = e.target.getAttribute('id');
-        this.props.dispatch(this.__deleteModule(module_to_delete_id));
+        this.props.dispatch(this.__deleteModule(module_to_delete_id, this.props));
     }
 
-    __deleteModule(value) {
+    __deleteModule(value, props) {
         return async (dispatch) => {
-          postData('courses/delete', [], value)
-          .then((result) => {
-            this.props.history.goBack();
-          })
-          .catch((error) => {
-            console.warn(error);
-          })
+            postData('courses/delete', [], value)
+                .then((result) => {
+                    const prefix = "https://comp0067-node.azurewebsites.net/"
+
+                    fetch(prefix + 'jwt/', {
+                        method: 'POST',
+                        headers: {
+                            Accept: 'application/json',
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify({
+                            UPI: props.UPI,
+                            Token: props.Token,
+                        }),
+                    })
+                        .then((res) => {
+                            if (res.ok) {
+                                return res.json();
+                            }
+                            throw new Error(res.status);
+                        })
+                        .then((data) => {
+                            this.props.dispatch({ type: 'SET_JWT', JWT: data.jwt });
+                            this.props.history.push('/#');
+                            this.props.history.go();
+                        })
+                })
+                .catch((error) => {
+                    console.warn(error);
+                })
         }
-      }
+    }
 
     componentDidMount() {
         postData('courses/list', [])
@@ -211,7 +234,11 @@ class Home extends Component {
 
 const mapStateToProps = state => {
     const mymodules = getModules(state);
-    return { mymodules };
+    return {
+        mymodules,
+        UPI: state.authReducer.UPI,
+        Token: state.authReducer.Token,
+    };
 };
 
 const mapDispatchToProps = dispatch => {
