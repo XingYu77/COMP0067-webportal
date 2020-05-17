@@ -31,5 +31,5 @@ jobs:
       with:
         app-name: 'comp0067-react'
         slot-name: 'production'
-        publish-profile: ${{ secrets.AzureAppService_PublishProfile_1cab6edbbc7e42aaa901d7ddbe202fc4 }}
+        publish-profile: ${{ secrets.AzureAppService_PublishProfile_3b0c3c423504442db52e0600d8b2d214 }}
         package: .
