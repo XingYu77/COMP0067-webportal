@@ -12,9 +12,9 @@ const persistConfig = {
     whitelist: [
       'authReducer',
       'modules',
+      'students',
     ],
     blacklist: [
-      'students',
       'ta',
       'teams',
     ],

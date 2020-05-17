@@ -16,12 +16,87 @@ class Module extends Component {
     this.state = { UploadFilesShow: false };
   };
 
-  componentDidMount() {
+  async componentDidMount() {
     console.log('MOUNT');
 
-    console.log(this.props.match.params.moduleId);
+    postData('students/list', [], this.props.match.params.moduleId)
+      .then((list) => {
+        postData('students/info', list, this.props.match.params.moduleId)
+          .then((result) => {
+            let allIds = [];
+            let byIds = {};
 
-    
+            Object.entries(result).forEach(([key, value]) => {
+              allIds.push(key);
+              byIds[key] = {
+                moduleId: this.props.match.params.moduleId,
+                studentId: value.info.studentid,
+                firstName: value.info.firstname,
+                lastName: value.info.lastname,
+                photo: Array.isArray(value.info.imgsrc) ? value.info.imgsrc[0] : null,
+                eMail: value.info.email,
+                team: value.info.gid,
+              }
+            });
+
+
+            this.props.dispatch({ type: '_SET_Student', key: 'byIds', value: byIds });
+            this.props.dispatch({ type: '_SET_Student', key: 'allIds', value: allIds });
+          })
+      })
+
+    postData('teams/list', [], this.props.match.params.moduleId)
+      .then((list) => {
+        postData('teams/info', list, this.props.match.params.moduleId)
+          .then((result) => {
+            let allIds = [];
+            let byIds = {};
+            let taIds = {};
+
+            Object.entries(result).forEach(([key, value]) => {
+              allIds.push(key);
+              byIds[key] = {
+                moduleId: this.props.match.params.moduleId,
+                name: value.info.name,
+                lab: value.info.lab,
+                projectName: value.info.projectName,
+                ta: value.info.ta,
+                teamLeader: value.member[0],
+                firstMember: value.member[1],
+                secondMember: value.member[2],
+              }
+              taIds[value.info.ta] = true;
+            });
+
+            this.props.dispatch({ type: '_SET_Team', key: 'byIds', value: byIds });
+            this.props.dispatch({ type: '_SET_Team', key: 'allIds', value: allIds });
+
+            taIds = Object.keys(taIds);
+
+            postData('students/info', taIds, this.props.match.params.moduleId)
+              .then((result) => {
+                let allIds = [];
+                let byIds = {};
+
+                Object.entries(result).forEach(([key, value]) => {
+                  allIds.push(key);
+                  byIds[key] = {
+                    moduleId: this.props.match.params.moduleId,
+                    studentId: value.info.studentid,
+                    name: value.info.firstname + ' ' + value.info.lastname,
+                    eMail: value.info.email,
+                    degree: value.info.program,
+                  }
+                });
+
+                this.props.dispatch({ type: '_SET_TA', key: 'byIds', value: byIds });
+                this.props.dispatch({ type: '_SET_TA', key: 'allIds', value: allIds });
+              })
+
+          })
+      })
+
+    console.log(this.props.match.params.moduleId);
   }
 
   componentWillUnmount() {

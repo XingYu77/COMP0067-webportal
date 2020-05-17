@@ -2,12 +2,13 @@ import React, { Component } from 'react';
 import { Modal, Form } from 'react-bootstrap';
 import Header from '../../compnents/Header';
 import { Link } from 'react-router-dom';
-import { AddModule } from '../../compnents/AddModule';
-import { EditModule } from '../../compnents/EditModule';
+import AddModule from '../../compnents/AddModule';
+import EditModule from '../../compnents/EditModule';
 import { getModules } from "../../redux/selectors";
-import { connect } from "react-redux";
+import { connect, batch } from "react-redux";
 import { deleteModule } from "../../redux/actions"
 import { postData } from "../../redux/_action";
+import { withRouter } from 'react-router-dom';
 import './style.css';
 
 
@@ -55,10 +56,22 @@ class Home extends Component {
     }
 
     goToDelete = (e) => {
+        e.preventDefault();
         const module_to_delete_id = e.target.getAttribute('id');
-        console.log(module_to_delete_id);
-        this.props.deleteThisModule(module_to_delete_id)
+        this.props.dispatch(this.__deleteModule(module_to_delete_id));
     }
+
+    __deleteModule(value) {
+        return async (dispatch) => {
+          postData('courses/delete', [], value)
+          .then((result) => {
+            this.props.history.goBack();
+          })
+          .catch((error) => {
+            console.warn(error);
+          })
+        }
+      }
 
     componentDidMount() {
         postData('courses/list', [])
@@ -83,8 +96,10 @@ class Home extends Component {
                         weeks: Math.ceil(elapsed / 604800000),
                     }
                 })
-                this.props.dispatch({ type: '_SET_Module', key: 'allIds', value: allIds });
-                this.props.dispatch({ type: '_SET_Module', key: 'byIds', value: byIds });
+                batch(() => {
+                    this.props.dispatch({ type: '_SET_Module', key: 'allIds', value: allIds });
+                    this.props.dispatch({ type: '_SET_Module', key: 'byIds', value: byIds });
+                })
             })
             .catch((error) => {
                 console.warn(error);
@@ -202,8 +217,8 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
     return {
         dispatch,
-        deleteThisModule: (id) => { dispatch(deleteModule(id)) }
     }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(Home);
+const HomeWrapper = withRouter(Home);
+export default connect(mapStateToProps, mapDispatchToProps)(HomeWrapper);
