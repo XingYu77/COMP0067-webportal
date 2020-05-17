@@ -1,3 +1,5 @@
+/* eslint-disable jsx-a11y/alt-text */
+
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { withRouter, Link } from 'react-router-dom';
